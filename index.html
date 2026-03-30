@@ -3,85 +3,304 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Julia's Website</title>
+  <title>Julia | Personal Website</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #E4BFF2;
-      color: #222;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #0b0b0f;
+      color: #f5f1e8;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    header {
-      background: #111;
-      color: white;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 180, 120, 0.12), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(120, 140, 255, 0.12), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.05), transparent 30%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 80px 20px;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+      background:
+        linear-gradient(rgba(5,5,8,0.55), rgba(5,5,8,0.8)),
+        url("https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 48px;
-    }
-
-    header p {
-      margin-top: 12px;
-      font-size: 20px;
-      opacity: 0.9;
-    }
-
-    main {
+    .hero-content {
       max-width: 850px;
-      margin: 40px auto;
-      padding: 0 20px;
+      animation: fadeIn 1.5s ease;
     }
 
-    section {
-      background: white;
-      margin-bottom: 24px;
-      padding: 28px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    .eyebrow {
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: #d8c7a3;
+      margin-bottom: 18px;
     }
 
-    h2 {
-      margin-top: 0;
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.45);
     }
 
-    a {
-      color: #2563eb;
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: rgba(245, 241, 232, 0.88);
+    }
+
+    .hero-links a {
+      display: inline-block;
+      margin: 10px 12px;
+      padding: 12px 22px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      color: #f5f1e8;
       text-decoration: none;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
     }
 
-    a:hover {
-      text-decoration: underline;
+    .hero-links a:hover {
+      background: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: 90px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 22px;
+      color: #f4dfb3;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      color: rgba(245, 241, 232, 0.82);
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(244, 223, 179, 0.35);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+      color: #fff5dc;
+    }
+
+    .card p {
+      color: rgba(245, 241, 232, 0.78);
+      font-size: 0.98rem;
+    }
+
+    .quote {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #f5e7c8;
+      max-width: 850px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 50px 20px 70px;
+      color: rgba(245, 241, 232, 0.55);
+      font-size: 0.95rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .quote {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Hi, I'm Julia</h1>
-    <p>Welcome to my personal website 🌷</p>
-  </header>
-
-  <main>
-    <section>
-      <h2>About Me</h2>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">Julia's Personal Website</div>
+      <h1>Life, framed like a film.</h1>
       <p>
-        I'm a freshman at Berkeley, interested in film, culture, and technology.
-        This is my personal space on the internet.
+        A small corner on the internet for my thoughts, projects, films, and the
+        strange beauty of becoming.
+      </p>
+      <div class="hero-links">
+        <a href="#about">Enter</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="section" id="about">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-intro">
+        I’m Julia, a student interested in film, culture, technology, and the emotional
+        texture of everyday life. I like stories that linger after they end, images that
+        feel like memory, and ideas that make the world look slightly different.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Film</h3>
+          <p>
+            I love movies with emotional depth, cinematic atmosphere, and the kind of scenes
+            that stay in your head long after the credits.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Writing</h3>
+          <p>
+            I write to capture fleeting moods, reflections, and small moments that feel larger
+            than they should.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Exploration</h3>
+          <p>
+            I’m still figuring out who I am and what I want to build, which is honestly the plot
+            of most good coming-of-age films anyway.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <h2 class="section-title">Selected Scenes</h2>
+      <p class="section-intro">
+        Think of these as fragments, drafts, and episodes rather than polished monuments.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Personal Essays</h3>
+          <p>
+            Reflections on travel, youth, memory, comparison, loneliness, and whatever else insists
+            on becoming language.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Creative Projects</h3>
+          <p>
+            Film-related work, visual storytelling experiments, and ideas that live somewhere between
+            diary and cinema.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Future Work</h3>
+          <p>
+            More projects are on the way. Every website starts as a trailer before it becomes a full film.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="quote">
+        “Some lives are not meant to be explained all at once. They are meant to be watched,
+        scene by scene.”
       </p>
     </section>
 
-    <section>
-      <h2>Projects</h2>
-      <p>More projects coming soon.</p>
+    <section class="section" id="contact">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-intro">
+        You can reach me here, or just think of this site as a quiet theater with the lights still on.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Email</h3>
+          <p>your-email@example.com</p>
+        </div>
+        <div class="card">
+          <h3>GitHub</h3>
+          <p>github.com/7ulia-w</p>
+        </div>
+        <div class="card">
+          <h3>Status</h3>
+          <p>Still writing the next scene.</p>
+        </div>
+      </div>
     </section>
+  </div>
 
-    <section>
-      <h2>Contact</h2>
-      <p>Email: notjulia707@gmail.com</p>
-    </section>
-  </main>
+  <footer class="footer">
+    © 2026 Julia. Directed by insomnia, sunlight, and a suspiciously cinematic imagination.
+  </footer>
 </body>
 </html>
